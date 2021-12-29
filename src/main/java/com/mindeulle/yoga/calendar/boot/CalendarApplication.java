@@ -2,10 +2,11 @@ package com.mindeulle.yoga.calendar.boot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.reactive.config.EnableWebFlux;
 
-@EnableSwagger2
+@EnableScheduling
+@SpringBootApplication(scanBasePackages = {"com.mindeulle.yoga.calendar"})
 public class CalendarApplication {
 
     public static void main(String[] args) {
