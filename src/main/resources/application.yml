@@ -2,4 +2,4 @@ logging:
   file:
     name: ${user.dir}/log/test.log  # 로깅 파일 위치이다.
   level:
-    com.mindeulle.yoga.calendar : debug
+    com.mindeulle.yoga.calendar : info
