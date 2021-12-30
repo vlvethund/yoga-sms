@@ -4,7 +4,6 @@ import com.mindeulle.yoga.calendar.model.vo.File;
 import com.mindeulle.yoga.calendar.model.vo.Message;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
