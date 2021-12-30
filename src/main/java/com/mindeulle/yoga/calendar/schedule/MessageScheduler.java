@@ -15,12 +15,15 @@ import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.mindeulle.yoga.calendar.model.MessageRequest;
 import com.mindeulle.yoga.calendar.model.MessageRespond;
 import com.mindeulle.yoga.calendar.model.vo.Message;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -36,10 +39,14 @@ import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-
+@Slf4j
 @Component
 public class MessageScheduler {
 
@@ -57,6 +64,7 @@ public class MessageScheduler {
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         //
+        log.info("Scheduling Process: " + LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) );
         InputStream in = MessageScheduler.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
@@ -96,7 +104,8 @@ public class MessageScheduler {
 
         Map<String, JsonArray> attendeesInfo = new HashMap<>();
         if (items.isEmpty()) {
-            System.out.println("No upcoming events found.");
+            log.info("No Upcoming Events Found");
+            return;
         } else {
             for (Event event : items) {
                 DateTime start = event.getStart().getDateTime();
@@ -112,6 +121,7 @@ public class MessageScheduler {
         MessageRequest messageRequest = new MessageRequest();
         messageRequest.setType("MMS");
         messageRequest.setFrom("01046706532");
+        messageRequest.setSubject("수업 예약 알림");
         messageRequest.setContent("안녕하세요, 민들레요가 입니다." +
                 " 내일 수업이 예약되어있습니다." +
                 " 당일취소는 횟수 차감이니" +
@@ -140,6 +150,10 @@ public class MessageScheduler {
         long currentTime = System.currentTimeMillis();
         String signature = makeSignature(serviceId, accessKey, secretKey, currentTime);
 
+        if (messageRequest.getMessages().size() == 0) {
+            log.info("No Messages To Send. Current Message Size: " + messageRequest.getMessages().size());
+            return;
+        }
 
         Mono<MessageRespond> messageRespondMono = webClient.post()
                 .uri(String.format("/v2/services/%s/messages", serviceId))
@@ -153,7 +167,7 @@ public class MessageScheduler {
                 .retrieve()
                 .bodyToMono(MessageRespond.class);
         messageRespondMono.block();
-        System.out.println("done");
+        log.info("Sending Messages Success. Today Message Size: " + messageRequest.getMessages().size());
     }
 
     public String makeSignature(String serviceId, String accessKey, String secretKey, Long time) throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
