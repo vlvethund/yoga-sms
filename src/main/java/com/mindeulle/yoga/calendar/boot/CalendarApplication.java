@@ -12,6 +12,7 @@ public class CalendarApplication {
 
     public static void main(String[] args) {
         //
+        System.out.println("test");
         SpringApplication.run(CalendarApplication.class, args);
         log.info("Boot Started");
     }
