@@ -140,13 +140,13 @@ public class MessageScheduler {
                 Message message = new Message();
                 message.setTo(mobile);
                 message.setContent(String.format("안녕하세요 %s님, 민들레요가입니다." +
-                        " 내일 [%s] 수업이 예약되어있습니다." +
+                        " 내일 [%s] 타임 수업이 예약되어있습니다." +
                         " 당일 취소는 횟수 차감이니" +
                         " 전날 취소해주세요", name, key));
                 messageRequest.getMessages().add(message);
                 ownerMessage.append(name).append(" ");
             }
-            ownerMessage.append("//\n");
+            ownerMessage.append("// \n");
         }
 
         Message toOwner = new Message();
@@ -207,7 +207,7 @@ public class MessageScheduler {
     }
 
 //    @Scheduled(cron = "0 * * * * ?")
-    @Scheduled(cron = "0 20 * * * ?")
+    @Scheduled(cron = "0 0 20 * * ?")
     public void sendSmsEveryDay() throws IOException, GeneralSecurityException {
         proceed();
     }
