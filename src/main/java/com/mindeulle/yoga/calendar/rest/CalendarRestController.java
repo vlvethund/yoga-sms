@@ -1,34 +1,20 @@
 package com.mindeulle.yoga.calendar.rest;
 
-import org.slf4j.Logger;
-import org.springframework.web.bind.annotation.*;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
+@Slf4j
 @RestController
 @RequestMapping("/mindeulle/yoga/calendar")
 public class CalendarRestController {
     //
-    private final Logger logger;
-
-    public CalendarRestController() {
-        //
-        logger = LoggerFactory.getLogger("logger");
-    }
-
     @CrossOrigin
-    @PostMapping("/test")
-    public String execute(@RequestBody String something) {
+    @GetMapping("/test")
+    public String execute() {
         //
-        logger.info(something);
         return "hello";
-    }
-
-    @GetMapping("/test2")
-    public void execute(HttpServletResponse response) throws IOException {
-        String redirect_uri="http://www.google.com";
-        response.sendRedirect(redirect_uri);
     }
 }

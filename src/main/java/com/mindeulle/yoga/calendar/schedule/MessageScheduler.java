@@ -119,30 +119,41 @@ public class MessageScheduler {
         }
 
         MessageRequest messageRequest = new MessageRequest();
+        StringBuilder ownerMessage = new StringBuilder("내일 예약 현황입니다 \n");
+        String ownerMobile = "01046706532";
+
         messageRequest.setType("MMS");
-        messageRequest.setFrom("01046706532");
+        messageRequest.setFrom(ownerMobile);
         messageRequest.setSubject("수업 예약 알림");
         messageRequest.setContent("안녕하세요, 민들레요가 입니다." +
                 " 내일 수업이 예약되어있습니다." +
-                " 당일취소는 횟수 차감이니" +
+                " 당일 취소는 횟수 차감이니" +
                 " 전날 취소해주세요");
 
         for (String key : attendeesInfo.keySet()) {
-            JsonArray jsonElements1 = attendeesInfo.get(key);
-            for (JsonElement element : jsonElements1) {
+            ownerMessage.append("[").append(key).append("] ");
+            JsonArray jsonElements = attendeesInfo.get(key);
+            for (JsonElement element : jsonElements) {
                 String name = element.getAsJsonObject().get("name").getAsString();
                 String mobile = element.getAsJsonObject().get("mobile").getAsString();
 
                 Message message = new Message();
                 message.setTo(mobile);
                 message.setContent(String.format("안녕하세요 %s님, 민들레요가입니다." +
-                        " 내일 %s 수업이 예약되어있습니다." +
-                        " 당일취소는 횟수 차감이니" +
+                        " 내일 [%s] 수업이 예약되어있습니다." +
+                        " 당일 취소는 횟수 차감이니" +
                         " 전날 취소해주세요", name, key));
                 messageRequest.getMessages().add(message);
-
+                ownerMessage.append(name).append(" ");
             }
+            ownerMessage.append("//\n");
         }
+
+        Message toOwner = new Message();
+        toOwner.setSubject("수업 예약 현황");
+        toOwner.setTo(ownerMobile);
+        toOwner.setContent(ownerMessage.toString());
+        messageRequest.getMessages().add(toOwner);
 
         String serviceId = "ncp:sms:kr:277710741014:mindeulle";
         String accessKey = "y3SlFARFn8SMZb8PVy2o";
@@ -195,8 +206,8 @@ public class MessageScheduler {
         return Base64.encodeBase64String(rawHmac);
     }
 
-    @Scheduled(cron = "0/30 30 10 * * ?")
-//    @Scheduled(cron = "0 20 * * *")
+//    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "0 20 * * *")
     public void sendSmsEveryDay() throws IOException, GeneralSecurityException {
         proceed();
     }

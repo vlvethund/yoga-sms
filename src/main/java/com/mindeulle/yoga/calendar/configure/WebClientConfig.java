@@ -21,26 +21,6 @@ public class WebClientConfig {
                 .forEach(writer -> ((LoggingCodecSupport) writer).setEnableLoggingRequestDetails(true));
 
         return WebClient.builder()
-//                .clientConnector(
-//                        new ReactorClientHttpConnector(
-//                                HttpClient
-//                                        .create()
-//                                        .secure(
-//                                                ThrowingConsumer.unchecked(
-//                                                        sslContextSpec -> sslContextSpec.sslContext(
-//                                                                SslContextBuilder.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE).build()
-//                                                        )
-//                                                )
-//                                        )
-//                                        .tcpConfiguration(
-//                                                client -> client.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 120_000)
-//                                                        .doOnConnected(conn -> conn.addHandlerLast(new ReadTimeoutHandler(180))
-//                                                                .addHandlerLast(new WriteTimeoutHandler(180))
-//                                                        )
-//                                        )
-//                        )
-//                )
-//                .exchangeStrategies(exchangeStrategies)
                 .baseUrl("https://sens.apigw.ntruss.com/sms")
                 .build();
 
