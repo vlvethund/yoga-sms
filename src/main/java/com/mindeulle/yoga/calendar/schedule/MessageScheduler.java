@@ -207,7 +207,7 @@ public class MessageScheduler {
     }
 
 //    @Scheduled(cron = "0 * * * * ?")
-    @Scheduled(cron = "0 20 * * *")
+    @Scheduled(cron = "0 20 * * * ?")
     public void sendSmsEveryDay() throws IOException, GeneralSecurityException {
         proceed();
     }
