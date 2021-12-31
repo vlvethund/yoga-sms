@@ -195,7 +195,7 @@ public class MessageScheduler {
         return Base64.encodeBase64String(rawHmac);
     }
 
-    @Scheduled(cron = "0/30 * * * * ?")
+    @Scheduled(cron = "0/30 30 10 * * ?")
 //    @Scheduled(cron = "0 20 * * *")
     public void sendSmsEveryDay() throws IOException, GeneralSecurityException {
         proceed();
