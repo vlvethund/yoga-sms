@@ -15,10 +15,7 @@ import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.mindeulle.yoga.calendar.model.MessageRequest;
 import com.mindeulle.yoga.calendar.model.MessageRespond;
 import com.mindeulle.yoga.calendar.model.vo.Message;
@@ -113,13 +110,18 @@ public class MessageScheduler {
             return;
         } else {
             for (Event event : items) {
-                DateTime start = event.getStart().getDateTime();
-                if (start == null) {
-                    start = event.getStart().getDate();
+                try {
+                    DateTime start = event.getStart().getDateTime();
+                    if (start == null) {
+                        start = event.getStart().getDate();
+                    }
+                    String startTimeString = Instant.ofEpochMilli(start.getValue()).atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime().toLocalTime().toString();
+
+                    JsonObject jsonObject = new Gson().fromJson(event.getDescription(), JsonObject.class);
+                    attendeesInfo.put(startTimeString, jsonObject.getAsJsonArray("attendees"));
+                } catch (JsonSyntaxException e) {
+                    log.info("Description Of The Event Cannot Be Formatted As Json. Event Id: " + event.getId());
                 }
-                String startTimeString = Instant.ofEpochMilli(start.getValue()).atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime().toLocalTime().toString();
-                JsonObject jsonObject = new Gson().fromJson(event.getDescription(), JsonObject.class);
-                attendeesInfo.put(startTimeString, jsonObject.getAsJsonArray("attendees"));
             }
         }
 
