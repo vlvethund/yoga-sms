@@ -66,7 +66,7 @@ public class MessageScheduler {
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         //
-        log.info("Scheduling Process: " + LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) );
+        log.info("Scheduling Process: " + LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         InputStream in = MessageScheduler.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
