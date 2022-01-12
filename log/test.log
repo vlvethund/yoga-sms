@@ -184,3 +184,5 @@ POST https://oauth2.googleapis.com/token
 2022-01-12 16:26:32.527  INFO 3536 --- [scheduling-1] c.m.y.c.schedule.MessageScheduler        : No Upcoming Events Found
 2022-01-12 16:27:00.017  INFO 3536 --- [scheduling-1] c.m.y.c.schedule.MessageScheduler        : Scheduling Process: 2022-01-12T16:27:00.017
 2022-01-12 16:27:00.659  INFO 3536 --- [scheduling-1] c.m.y.c.schedule.MessageScheduler        : No Upcoming Events Found
+2022-01-12 16:28:00.012  INFO 3536 --- [scheduling-1] c.m.y.c.schedule.MessageScheduler        : Scheduling Process: 2022-01-12T16:28:00.012
+2022-01-12 16:28:00.661  INFO 3536 --- [scheduling-1] c.m.y.c.schedule.MessageScheduler        : No Upcoming Events Found
