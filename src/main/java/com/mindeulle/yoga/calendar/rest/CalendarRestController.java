@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CalendarRestController {
     //
     @CrossOrigin
-    @GetMapping("/test")
+    @GetMapping("/awake")
     public String execute() {
         //
         return "hello";
