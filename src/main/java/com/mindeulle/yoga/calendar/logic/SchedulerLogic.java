@@ -158,12 +158,12 @@ public class SchedulerLogic {
                 }
                 String startTimeString = Instant.ofEpochMilli(start.getValue()).atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime().toLocalTime().toString();
                 JsonObject jsonObject = new Gson().fromJson(event.getDescription(), JsonObject.class);
-                log.info("startTimeString: "+startTimeString);
-                log.info("jsonObject: "+jsonObject.getAsString());
 
                 attendeesInfo.put(startTimeString, jsonObject.getAsJsonArray("attendees"));
             } catch (JsonSyntaxException e) {
                 log.info("Description Of The Event Cannot Be Formatted As Json. Event Id: " + event.getId());
+            } catch (NullPointerException e) {
+                log.info("There is no reservation on this event. Event Id: " + event.getId());
             }
         }
 
