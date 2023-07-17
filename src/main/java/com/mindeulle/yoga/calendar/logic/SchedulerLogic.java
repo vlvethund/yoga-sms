@@ -78,6 +78,7 @@ public class SchedulerLogic {
         //
         List<Event> items = prepareItems();
         MessageRequest messageRequest = prepareMessageRequest(items);
+        log.info(messageRequest.toString());
     }
 
     private MessageRequest prepareMessageRequest(List<Event> items) {
@@ -234,15 +235,13 @@ public class SchedulerLogic {
         String url = "/sms/v2/services/" + SchedulerLogic.NC_SERVICE_ID + "/messages";
         String timestamp = time.toString();
 
-        String message = new StringBuilder()
-                .append(method)
-                .append(space)
-                .append(url)
-                .append(newLine)
-                .append(timestamp)
-                .append(newLine)
-                .append(SchedulerLogic.NC_ACCESS_KEY)
-                .toString();
+        String message = method +
+                space +
+                url +
+                newLine +
+                timestamp +
+                newLine +
+                SchedulerLogic.NC_ACCESS_KEY;
 
         SecretKeySpec signingKey = new SecretKeySpec(SchedulerLogic.NC_SECRET_KEY.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
         Mac mac = Mac.getInstance("HmacSHA256");

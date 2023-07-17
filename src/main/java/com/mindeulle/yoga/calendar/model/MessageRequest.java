@@ -31,5 +31,46 @@ public class MessageRequest {
         this.messages = new ArrayList<>();
         this.files = new ArrayList<>();
     }
+
+    @Override
+    public String toString() {
+
+        return "type: " + type + " | " +
+                "contentType: " + contentType + " | " +
+                "countryCode: " + countryCode + " | " +
+                "from: " + from + " | " +
+                "subject: " + subject + " | " +
+                "content: " + content + " | " +
+                "messages: " + messagesToString(messages) + " | " +
+                "files: " + files + " | " +
+                "reserveTime: " + reserveTime + " | " +
+                "reserveTimeZone: " + reserveTimeZone + " | " +
+                "scheduleCode: " + scheduleCode + " | ";
+    }
+
+    private static String messagesToString(List<Message> list) {
+        if (list == null)
+            return "null";
+
+        int iMax = list.size() - 1;
+        if (iMax == -1)
+            return "[]";
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("[");
+        for (int i = 0; ; i++) {
+            Message message = list.get(i);
+            builder
+                    .append("To:")
+                    .append(message.getTo())
+                    .append(", Subject: ")
+                    .append(message.getSubject())
+                    .append(", Message: ")
+                    .append(message.getContent());
+            if (i == iMax)
+                return builder.append(']').toString().replaceAll("\n", "");
+            builder.append(", ");
+        }
+    }
 }
 

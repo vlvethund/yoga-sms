@@ -15,9 +15,9 @@ public class MessageScheduler {
 
     private final SchedulerLogic schedulerLogic;
 
-//    @Scheduled(cron = "0 * * * * ?")
-    @Scheduled(cron = "0 0 20 * * ?")
-    public void sendSmsEveryDay() throws IOException, GeneralSecurityException {
-        schedulerLogic.proceed();
-    }
+    //    @Scheduled(cron = "0 * * * * ?")
+//    @Scheduled(cron = "0 0 20 * * ?")
+//    public void sendSmsEveryDay() throws IOException, GeneralSecurityException {
+//        schedulerLogic.proceed();
+//    }
 }
