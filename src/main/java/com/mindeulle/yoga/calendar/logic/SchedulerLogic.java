@@ -61,7 +61,7 @@ public class SchedulerLogic {
     private static final String NC_SECRET_KEY = "h7AP1GsKucfIkOFQao3BjyotCJWyEMdXpxj9bDET";
     private static final String OWNER_MOBILE = "01020252785";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-    private static final String TOKENS_DIRECTORY_PATH = "/home/steam/mindeulle-yoga/daily-message/tokens";
+    private static final String TOKENS_DIRECTORY_PATH = "/home/ubuntu/mindeulle-yoga/daily-message/tokens";
     private static final List<String> SCOPES = Collections.singletonList(CalendarScopes.CALENDAR_EVENTS_READONLY);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
